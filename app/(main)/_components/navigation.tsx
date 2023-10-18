@@ -1,6 +1,8 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+import { useSearch } from '@/hooks/use-search';
+import { useSettings } from '@/hooks/use-settings';
 import {
   ChevronsLeft,
   MenuIcon,
@@ -28,9 +30,10 @@ import { TrashBox } from './trash-box';
 
 export const Navigation = () => {
   const pathname = usePathname();
+  const settings = useSettings();
   const isMobile = useMediaQuery('(max-width: 768px)');
   const create = useMutation(api.documents.create);
-
+  const search = useSearch();
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<'aside'>>(null);
   const navbarRef = useRef<ElementRef<'div'>>(null);
@@ -153,8 +156,8 @@ export const Navigation = () => {
         </div>
         <div>
           <UserItem />
-          <Item label='Search' icon={Search} isSearch onClick={() => {}} />
-          <Item label='Settings' icon={Settings} onClick={() => {}} />
+          <Item label='Search' icon={Search} isSearch onClick={search.onOpen} />
+          <Item label='Settings' icon={Settings} onClick={settings.onOpen} />
           <Item onClick={handleCreate} label='New page' icon={PlusCircle} />
         </div>
         <div className='mt-4'>
